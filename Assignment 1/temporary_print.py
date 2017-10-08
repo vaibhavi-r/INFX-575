@@ -14,4 +14,5 @@ def read_tweet_file(file = "problem_1_submission.txt"):
                 tweets_list.append(data)
 
 
+
 read_tweet_file()

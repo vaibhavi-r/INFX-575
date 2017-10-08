@@ -4,7 +4,6 @@ import pprint as pp
 import json
 
 
-
 def hw():
     print('Hello, world!')
 
@@ -28,7 +27,7 @@ def main():
     #Parse sentiment and tweet files to generate scores
     sentiment = read_sentiment_file(senti_file_name)
     tweets_list = read_tweet_file(tweet_file_name)
-    tweet_scores = score_tweets(tweets_list, sentiment)
+    tweet_scores = score_tweets(sentiment, tweets_list)
 
     print("\nNumber of Tweets with text : \n%d " % (len(tweets_list)))
     print("\nNumber of Tweets scored    : \n%d " %(len(tweet_scores)))
@@ -57,21 +56,20 @@ def read_tweet_file(file = "output.txt"):
     return tweets_list
 
 #Extract text from tweet
-
 def extract_text(d):
     return d["text"]
 
-#score the tweets
-def score_tweets(tweets_list, sentiment ):
+
+#Score the tweets
+def score_tweets(sentiment, tweets_list ):
     score_list = []
     for tweet in tweets_list:
         score=0
         words = extract_text(tweet).split(" ")
         for w in words:
             score+= sentiment.get(w,0)
-        score_list.append(score)
+        score_list.append(int(score))
     return score_list
-
 
 if __name__ == '__main__':
     main()
