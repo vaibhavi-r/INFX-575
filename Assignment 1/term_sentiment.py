@@ -1,5 +1,7 @@
 import sys
 import tweet_sentiment as tweets
+from file_helper import *
+
 
 def hw():
     print('Hello, world!')
@@ -19,26 +21,20 @@ def main():
     lines(sent_file)
     lines(tweet_file)
 
-    new_terms = find_new_terms(senti_file_name, tweet_file_name)
-    new_term_scores = calculate_term_sentiment(new_terms)
+    tweets_list = read_tweet_file(tweet_file_name)
+    sentiment =   read_sentiment_file(senti_file_name)
 
-    print(len(new_terms))
+    new_term_scores = calculate_new_term_sentiments(sentiment, tweets_list)
     print(len(new_term_scores))
 
 
-def find_new_terms(senti_file_name, tweet_file_name):
-    tweets_list = tweets.read_tweet_file(tweet_file_name)
-    sentiment =  tweets.read_sentiment_file(senti_file_name)
-    tweet_scores = tweets.score_tweets(sentiment, tweets_list)
-
+def find_new_terms(sentiment, tweets_list):
+    tweet_scores = tweets.score_tweets(sentiment,tweets_list )
     new_terms = {}
 
     for i in range(len(tweets_list)):
         tweet = tweets_list[i]
         score = tweet_scores[i]
-
-        if "text" not in tweet:
-            print("WHAT THE HELL")
 
         words = tweet["text"].split(" ")
         for w in words:
@@ -47,10 +43,15 @@ def find_new_terms(senti_file_name, tweet_file_name):
                     new_terms[w] = [score]
                 else: #seen before
                     new_terms[w].append(score)
+
+    print(len(new_terms))
     return new_terms
 
 
-def calculate_term_sentiment(new_terms):
+def calculate_new_term_sentiments(sentiment, tweets_list):
+
+    new_terms = find_new_terms(sentiment, tweets_list)
+
     new_term_scores = {}
     for term , val in new_terms.items():
         new_term_scores[term] = sum(val) / len(val)  #Average sentiment of a tweet containing new term
