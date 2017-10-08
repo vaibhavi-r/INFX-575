@@ -2,18 +2,15 @@
 
 import oauth2 as oauth
 import urllib.request as urllib
+import config
 
 # See assignment1.html instructions or README for how to get these credentials
 
-api_key = "q7W4tyWmbxXaBiiazeRNzNDUz"
-api_secret = "0RLXN80RIy3xKaqmGUQg09iz5D5O4ZL5QOxkukaSpHI3HKiq4o"
-access_token_key = "326888205-AOmWVrRX2AAglvGRlGqrDzbCQvaQ2w5g8rJgErtx"
-access_token_secret = "THSJf2zuHFdztiXzpZJbjnU25FxupaywaHHsBx7wzPwHb"
 
 _debug = 0
 
-oauth_token    = oauth.Token(key=access_token_key, secret=access_token_secret)
-oauth_consumer = oauth.Consumer(key=api_key, secret=api_secret)
+oauth_token    = oauth.Token(key=config.access_token_key, secret=config.access_token_secret)
+oauth_consumer = oauth.Consumer(key=config.api_key, secret=config.api_secret)
 
 signature_method_hmac_sha1 = oauth.SignatureMethod_HMAC_SHA1()
 
