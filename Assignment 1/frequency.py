@@ -1,5 +1,5 @@
 import sys
-import file_helper as fh
+import file_reader as fr
 
 def hw():
     print('Hello, world!')
@@ -15,7 +15,7 @@ def main():
     hw()
 
     lines(tweet_file)
-    tweets_list = fh.read_tweet_file(tweet_file_name)
+    tweets_list = fr.read_tweet_file(tweet_file_name)
 
     hist = calculate_frequency(tweets_list)
     ctr = 0

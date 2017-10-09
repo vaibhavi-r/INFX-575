@@ -1,4 +1,4 @@
-states = {
+US_codes = {
         'AK': 'Alaska',
         'AL': 'Alabama',
         'AR': 'Arkansas',
@@ -57,3 +57,10 @@ states = {
         'WV': 'West Virginia',
         'WY': 'Wyoming'
 }
+
+def get_state_code(input_str):
+    for code, name in US_codes.items():
+        if name == input_str:
+            return code
+    return None
+

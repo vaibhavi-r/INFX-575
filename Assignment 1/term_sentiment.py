@@ -1,6 +1,6 @@
 import sys
 import tweet_sentiment as tw
-from file_helper import *
+import file_reader as fr
 
 
 def hw():
@@ -21,8 +21,8 @@ def main():
     lines(sent_file)
     lines(tweet_file)
 
-    tweets_list = read_tweet_file(tweet_file_name)
-    sentiment =   read_sentiment_file(senti_file_name)
+    tweets_list = fr.read_tweet_file(tweet_file_name)
+    sentiment =   fr.read_sentiment_file(senti_file_name)
 
     new_term_scores = calculate_new_term_sentiments(sentiment, tweets_list)
     print(len(new_term_scores))
@@ -55,10 +55,7 @@ def calculate_new_term_sentiments(sentiment, tweets_list):
     new_term_scores = {}
     for term , val in new_terms.items():
         new_term_scores[term] = sum(val) / len(val)  #Average sentiment of a tweet containing new term
-
     return new_term_scores
-
-
 
 if __name__ == '__main__':
     main()
