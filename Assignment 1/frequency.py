@@ -8,7 +8,6 @@ def lines(fp):
     print(str(len(fp.readlines())))
 
 
-
 def main():
     tweet_file_name = sys.argv[1]
 

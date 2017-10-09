@@ -1,5 +1,5 @@
 import sys
-import tweet_sentiment as tweets
+import tweet_sentiment as tw
 from file_helper import *
 
 
@@ -29,7 +29,7 @@ def main():
 
 
 def find_new_terms(sentiment, tweets_list):
-    tweet_scores = tweets.score_tweets(sentiment,tweets_list )
+    tweet_scores = tw.score_tweets(sentiment,tweets_list )
     new_terms = {}
 
     for i in range(len(tweets_list)):
