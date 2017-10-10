@@ -2,25 +2,12 @@ import sys
 import file_reader as fr
 import tweet_sentiment as tw
 import states as st
+import operator
 import pprint as pp
-
-
-def hw():
-    print('Hello, world!')
-
-def lines(fp):
-    print(str(len(fp.readlines())))
 
 def main():
     senti_file_name = sys.argv[1]
     tweet_file_name = sys.argv[2]
-
-    sent_file = open(senti_file_name)
-    tweet_file = open(tweet_file_name)
-    hw()
-
-    lines(sent_file)
-    lines(tweet_file)
 
     #Prepare list of tweets, and sentiment words and scores for all tweets
     tweets_list = fr.read_tweet_file(tweet_file_name)
@@ -39,6 +26,7 @@ def main():
     #Find Happiest State (Most positive average sentiment)
     happiest_state = get_happiest_state(statewise_scores)
     print(happiest_state)
+
 
 def assign_state_to_tweets(tweets_list):
 
@@ -60,20 +48,22 @@ def assign_state_to_tweets(tweets_list):
                 if "place_type" in place:
                     place_type = place["place_type"]
 
+                    #Name Format = 'Texas'
                     if place_type =="admin":
                         if "name" in place:
                             name = place["name"]
 
-                            code = st.get_state_code(name)
+                            code = st.get_state_code(name) #Fetch state code for state name
                             if code is not None:
                                 found_state = True
                                 states_dict[code].append(idx)
 
-                    elif place_type =="city":
+                    # Full Name Format = 'Austin, TX'
+                    if place_type =="city":
                         if "full_name" in place:
                             full_name = place["full_name"]
 
-                            words = full_name.strip(" ").split(" ") #Full Name Format = 'Austin, TX'
+                            words = full_name.strip(" ").split(" ")
                             code = words[-1]
 
                             if code in st.US_codes:
@@ -85,13 +75,14 @@ def assign_state_to_tweets(tweets_list):
         if found_state ==False and "user" in tweet and  tweet["user"] is not None and "location" in tweet["user"]:
             location = tweet["user"]["location"]
             if location is not None:
-                words = location.strip(" ").split(" ")
+                words = location.strip().split(" ")
                 code = words[-1]
                 if code in st.US_codes:
                     found_state= True
                     states_dict[code].append(idx)
 
     return states_dict
+
 
 
 def calculate_state_scores(states_dict, tweet_scores):
@@ -109,8 +100,13 @@ def calculate_state_scores(states_dict, tweet_scores):
 
     return statewise_scores
 
+
+
 #Return the Full Name of the state with highest average sentiment of tweets
 def get_happiest_state(statewise_scores):
+    if len(statewise_scores) ==0:
+        return ""
+
     max_state = max(statewise_scores, key=lambda k: statewise_scores[k])
     return st.US_codes[max_state]
 
