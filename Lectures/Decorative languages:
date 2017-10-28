@@ -1,0 +1,63 @@
+Decorative languages: 
+What to do , and what condition about the result, over how to get there
+
+Imperative languages: Command based.
+Helps debug things
+
+
+
+
+Debugging is harder with syntax , because when you do it right, you will get an 
+
+
+Physical Data Independence:
+No need to jump to specific location, don't think aboot where it's arranged on disk.. Can think about rectangular tables
+
+
+
+Logical Data Independence: VIEWS
+
+Writing complex queries to present a simple
+
+View = Query with a name
+
+Why do we know it will work ?
+ Every query returns a relation.. Always input is a set/bag, and output is set/bag
+ Language is "algebraically closed"
+ Always results are tables...
+
+
+Is the query executed?
+CREATE VIEW view_name AS blah blah 
+It just saves the string, or when you 
+
+Why not fill it?
+	- Space
+	- Redundancy (Consistency)
+	- Fetch the latest data instead..
+	- Insulation from internal schema.
+
+Why fill it? 
+	- For performance reasons with Large table joins.
+	- 
+
+If caching helps the performace, it hurts with updates.
+Premature Optimization is the root of all evil.
+CREATE MATERIALIZED VIEW: Can materialize the view, instead 
+
+
+Row vs Column Based DB
+
+Row Based:
+---------
+Fetching multiple columns at once in SELECT clause
+Inserting Record is faster
+
+Column Based:
+-------------
+Joins based on single column, where only single 
+
+Moving from Insert and Update (Good for ROWS) to Reads and Analytics (GOOD for Columns)
+
+Column oriented is good when you use only a few columns most of the time.. 
+Next to each other on disk, you have same kind of data.. Can easily zip through it.. Can compress it better..
